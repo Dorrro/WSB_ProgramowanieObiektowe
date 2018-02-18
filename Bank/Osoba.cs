@@ -8,6 +8,15 @@
         public string Nazwisko { get; private set; }
         public DateTime DataUrodzenia { get; private set; }
 
+        public Osoba(string imie, string nazwisko, DateTime dataUrodzenia)
+        {
+            this.Imie = imie;
+            this.Nazwisko = nazwisko;
+            this.DataUrodzenia = dataUrodzenia;
+        }
+
+        ~Osoba() { }
+
         public void UstawInformacjeOOsobie(string imie, string nazwisko, DateTime dataUrodzenia)
         {
             this.Imie = imie;

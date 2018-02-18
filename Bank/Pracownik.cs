@@ -5,6 +5,41 @@
 
     public class Pracownik
     {
+        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, bool umowaNaCzasNieokreslony, ulong numerKonta)
+        {
+            this._wynagrodzenie = wynagrodzenie;
+            this._czasUmowyWMiesiacach = czasUmowyWMiesiacach;
+            this.Imie = imie;
+            this.Nazwisko = nazwisko;
+            this.NazwaStanowiska = nazwaStanowiska;
+            this.Umowa = umowa;
+            this.UmowaNaCzasNieokreslony = umowaNaCzasNieokreslony;
+            this.NumerKonta = numerKonta;
+        }
+
+        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, ulong numerKonta)
+        {
+            this._wynagrodzenie = wynagrodzenie;
+            this._czasUmowyWMiesiacach = czasUmowyWMiesiacach;
+            this.Imie = imie;
+            this.Nazwisko = nazwisko;
+            this.NazwaStanowiska = nazwaStanowiska;
+            this.Umowa = umowa;
+            this.NumerKonta = numerKonta;
+        }
+
+        public Pracownik(string imie, string nazwisko, string nazwaStanowiska, ulong numerKonta)
+        {
+            this.Imie = imie;
+            this.Nazwisko = nazwisko;
+            this.NazwaStanowiska = nazwaStanowiska;
+            this.NumerKonta = numerKonta;
+            this.Umowa = TypUmowy.OPace;
+            this.UmowaNaCzasNieokreslony = true;
+        }
+
+        ~Pracownik() { }
+
         public void UstawInformacjeOPracowniku(string imie, string nazwisko, string nazwaStanowiska, Wynagrodzenie wynagrodzenie, TypUmowy umowa, int czasUmowyWMiesiacach, bool umowaNaCzasNieokreslony, ulong numerKonta)
         {
             this.Imie = imie;
@@ -66,8 +101,7 @@
 
         public void WyplacWynagrodzenie()
         {
-            var operacja = new Operacja();
-            operacja.UstawDane(DateTime.Now, this._wynagrodzenie.PobierzWartoscWynagrodzenia(), this.NumerKonta, true, "Wyplata wynagrodzenia");
+            var operacja = new Operacja(DateTime.Now, this._wynagrodzenie.PobierzWartoscWynagrodzenia(), this.NumerKonta, true, "Wyplata wynagrodzenia");
             this._operacje[0] = operacja;
         }
 

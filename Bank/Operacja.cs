@@ -4,6 +4,26 @@
 
     internal class Operacja
     {
+        public Operacja(DateTime data, double kwota, ulong numerKonta, string tytul)
+        {
+            this.Data = data;
+            this.Kwota = kwota;
+            this.NumerKonta = numerKonta;
+            this.Tytul = tytul;
+            this.Realizacja = true;
+        }
+
+        public Operacja(DateTime data, double kwota, ulong numerKonta, bool realizacja, string tytul)
+        {
+            this.Data = data;
+            this.Kwota = kwota;
+            this.NumerKonta = numerKonta;
+            this.Realizacja = realizacja;
+            this.Tytul = tytul;
+        }
+
+        ~Operacja() { }
+
         public void UstawDane(DateTime data, double kwota, ulong numerKonta, bool realizacja, string tytul)
         {
             this.Data = data;
