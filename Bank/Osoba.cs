@@ -4,20 +4,20 @@
 
     public class Osoba
     {
-        private string _imie;
-        private string _nazwisko;
-        private DateTime _dataUrodzenia;
+        public string Imie { get; private set; }
+        public string Nazwisko { get; private set; }
+        public DateTime DataUrodzenia { get; private set; }
 
         public void UstawInformacjeOOsobie(string imie, string nazwisko, DateTime dataUrodzenia)
         {
-            this._imie = imie;
-            this._nazwisko = nazwisko;
-            this._dataUrodzenia = dataUrodzenia;
+            this.Imie = imie;
+            this.Nazwisko = nazwisko;
+            this.DataUrodzenia = dataUrodzenia;
         }
 
         public string PobierzDane()
         {
-            return string.Format("=========== Informacje o pracowniku ============\nImie i nazwisko: {0} {1}\nData urodzenia: {2}", this._imie, this._nazwisko, this._dataUrodzenia);
+            return string.Format("=========== Informacje o pracowniku ============\nImie i nazwisko: {0} {1}\nData urodzenia: {2}", this.Imie, this.Nazwisko, this.DataUrodzenia);
         }
     }
 }

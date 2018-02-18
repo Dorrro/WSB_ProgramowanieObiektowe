@@ -6,18 +6,18 @@
     {
         public void UstawDane(DateTime data, double kwota, ulong numerKonta, bool realizacja, string tytul)
         {
-            this._data = data;
-            this._kwota = kwota;
-            this._numerKonta = numerKonta;
-            this._realizacja = realizacja;
-            this._tytul = tytul;
+            this.Data = data;
+            this.Kwota = kwota;
+            this.NumerKonta = numerKonta;
+            this.Realizacja = realizacja;
+            this.Tytul = tytul;
         }
 
-        private DateTime _data;
-        private double _kwota;
-        private ulong _numerKonta;
-        private bool _realizacja;
-        private string _tytul;
+        public DateTime Data { get; private set; }
+        public double Kwota { get; private set; }
+        public ulong NumerKonta { get; private set; }
+        public bool Realizacja { get; private set; }
+        public string Tytul { get; private set; }
 
         public string PobierzDane()
         {
@@ -26,7 +26,7 @@
                                  "Tytul: {0}\n" +
                                  "Kwota: {1}\n" +
                                  "Data: {2}\n" +
-                                 "Numer konta: {3}", this._tytul, this._kwota, this._data, this._numerKonta);
+                                 "Numer konta: {3}", this.Tytul, this.Kwota, this.Data, this.NumerKonta);
         }
     }
 }
