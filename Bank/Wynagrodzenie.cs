@@ -1,12 +1,12 @@
-﻿namespace Bank
+﻿namespace Finanse.Pracownicy
 {
     public struct Wynagrodzenie
     {
         private double _placaZasadnicza;
         private double _dodatekStazowy;
-        private float _kosztUzyskaniaPrzychodu;
+        private double _kosztUzyskaniaPrzychodu;
 
-        public Wynagrodzenie ZmienWartosci(double placaZasadnicza, double dodatekStazowy, float kosztUzyskaniaPrzychodu)
+        public Wynagrodzenie ZmienWartosci(double placaZasadnicza, double dodatekStazowy, double kosztUzyskaniaPrzychodu)
         {
             this._placaZasadnicza = placaZasadnicza;
             this._dodatekStazowy = dodatekStazowy;

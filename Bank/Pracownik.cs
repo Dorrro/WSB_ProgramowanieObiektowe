@@ -1,15 +1,15 @@
-﻿namespace Bank
+﻿namespace Finanse.Pracownicy
 {
     using System;
+    using BankFinanse.Pracownicy;
 
     public class Pracownik
     {
-        public void UstawInformacjeOPracowniku(string imie, string nazwisko, string nazwaStanowiska, double pensja, Wynagrodzenie wynagrodzenie, TypUmowy umowa, int czasUmowyWMiesiacach, bool umowaNaCzasNieokreslony, ulong numerKonta)
+        public void UstawInformacjeOPracowniku(string imie, string nazwisko, string nazwaStanowiska, Wynagrodzenie wynagrodzenie, TypUmowy umowa, int czasUmowyWMiesiacach, bool umowaNaCzasNieokreslony, ulong numerKonta)
         {
             this._imie = imie;
             this._nazwisko = nazwisko;
             this._nazwaStanowiska = nazwaStanowiska;
-            this._pensja = pensja;
             this._wynagrodzenie = wynagrodzenie;
             this._umowa = umowa;
             this._czasUmowyWMiesiacach = czasUmowyWMiesiacach;
@@ -37,13 +37,6 @@
         }
 
         private string _nazwaStanowiska;
-
-        public double Pensja()
-        {
-            return this._pensja;
-        }
-
-        private double _pensja;
 
         public double DodatekWakacyjny()
         {

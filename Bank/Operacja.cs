@@ -1,4 +1,4 @@
-﻿namespace Bank
+﻿namespace Finanse.Pracownicy
 {
     using System;
 

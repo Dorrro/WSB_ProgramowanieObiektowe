@@ -1,4 +1,4 @@
-﻿namespace Bank
+﻿namespace BankFinanse.Pracownicy
 {
     public enum TypUmowy
     {
