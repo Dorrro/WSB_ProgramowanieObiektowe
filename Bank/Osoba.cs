@@ -4,8 +4,8 @@
 
     public class Osoba
     {
-        public string Imie { get; private set; }
-        public string Nazwisko { get; private set; }
+        public string Imie { get; protected set; }
+        public string Nazwisko { get; protected set; }
         public DateTime DataUrodzenia { get; private set; }
 
         public Osoba(string imie, string nazwisko, DateTime dataUrodzenia)

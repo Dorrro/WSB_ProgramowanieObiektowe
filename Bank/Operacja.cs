@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class Operacja
+    public class Operacja
     {
         public Operacja(DateTime data, double kwota, ulong numerKonta, string tytul)
         {

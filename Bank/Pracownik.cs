@@ -3,35 +3,29 @@
     using System;
     using BankFinanse.Pracownicy;
 
-    public class Pracownik
+    public class Pracownik : Osoba
     {
-        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, bool umowaNaCzasNieokreslony, ulong numerKonta)
+        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, bool umowaNaCzasNieokreslony, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
         {
             this._wynagrodzenie = wynagrodzenie;
             this._czasUmowyWMiesiacach = czasUmowyWMiesiacach;
-            this.Imie = imie;
-            this.Nazwisko = nazwisko;
             this.NazwaStanowiska = nazwaStanowiska;
             this.Umowa = umowa;
             this.UmowaNaCzasNieokreslony = umowaNaCzasNieokreslony;
             this.NumerKonta = numerKonta;
         }
 
-        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, ulong numerKonta)
+        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
         {
             this._wynagrodzenie = wynagrodzenie;
             this._czasUmowyWMiesiacach = czasUmowyWMiesiacach;
-            this.Imie = imie;
-            this.Nazwisko = nazwisko;
             this.NazwaStanowiska = nazwaStanowiska;
             this.Umowa = umowa;
             this.NumerKonta = numerKonta;
         }
 
-        public Pracownik(string imie, string nazwisko, string nazwaStanowiska, ulong numerKonta)
+        public Pracownik(string imie, string nazwisko, string nazwaStanowiska, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
         {
-            this.Imie = imie;
-            this.Nazwisko = nazwisko;
             this.NazwaStanowiska = nazwaStanowiska;
             this.NumerKonta = numerKonta;
             this.Umowa = TypUmowy.OPace;
@@ -52,11 +46,6 @@
             this.NumerKonta = numerKonta;
         }
 
-        public string Imie { get; private set; }
-
-        public string Nazwisko { get; private set; }
-
-
         public string NazwaStanowiska { get; private set; }
 
         public double DodatekWakacyjny()
@@ -69,9 +58,9 @@
             _dodatekWakacyjny = wartosc;
         }
 
-        private static double _dodatekWakacyjny = 1000;
+        protected static double _dodatekWakacyjny = 1000;
 
-        private Operacja[] _operacje = new Operacja[400];
+        protected Operacja[] _operacje = new Operacja[400];
 
         public double Pensja
         {
@@ -96,7 +85,7 @@
 
         public void ZmienWynagrodzenie(double placaZasadnicza, double dodatekStazowy, float kosztUzyskaniaPrzychodu)
         {
-            this._wynagrodzenie = this._wynagrodzenie.ZmienWartosci(placaZasadnicza, dodatekStazowy, kosztUzyskaniaPrzychodu);
+            this._wynagrodzenie = new Wynagrodzenie(placaZasadnicza, dodatekStazowy, kosztUzyskaniaPrzychodu);
         }
 
         public void WyplacWynagrodzenie()
@@ -105,7 +94,7 @@
             this._operacje[0] = operacja;
         }
 
-        private Wynagrodzenie _wynagrodzenie;
+        protected Wynagrodzenie _wynagrodzenie;
 
         public TypUmowy Umowa { get; set; }
 
@@ -114,10 +103,15 @@
             return this._czasUmowyWMiesiacach;
         }
 
-        private int _czasUmowyWMiesiacach;
+        protected int _czasUmowyWMiesiacach;
 
         public bool UmowaNaCzasNieokreslony { get; set; }
 
         public ulong NumerKonta { get; set; }
+
+        public void ZmienNazweStanowiska(string nazwa)
+        {
+            this.NazwaStanowiska = nazwa;
+        }
     }
 }

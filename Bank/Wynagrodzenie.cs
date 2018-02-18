@@ -6,13 +6,11 @@
         private double _dodatekStazowy;
         private double _kosztUzyskaniaPrzychodu;
 
-        public Wynagrodzenie ZmienWartosci(double placaZasadnicza, double dodatekStazowy, double kosztUzyskaniaPrzychodu)
+        public Wynagrodzenie(double placaZasadnicza, double dodatekStazowy, double kosztUzyskaniaPrzychodu)
         {
             this._placaZasadnicza = placaZasadnicza;
             this._dodatekStazowy = dodatekStazowy;
             this._kosztUzyskaniaPrzychodu = kosztUzyskaniaPrzychodu;
-
-            return this;
         }
 
         public double PobierzWartoscWynagrodzenia()
