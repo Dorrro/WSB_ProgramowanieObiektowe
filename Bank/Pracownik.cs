@@ -142,7 +142,13 @@
         {
             try
             {
+                var staraWartosc = this._wynagrodzenie.PobierzWartoscWynagrodzenia();
                 this._wynagrodzenie = new Wynagrodzenie(placaZasadnicza, dodatekStazowy, kosztUzyskaniaPrzychodu);
+                var nowaWartosc = this._wynagrodzenie.PobierzWartoscWynagrodzenia();
+                if (this.OnZmianaWynagrodzenia != null)
+                {
+                    this.OnZmianaWynagrodzenia(staraWartosc, nowaWartosc);
+                }
             }
             catch (Exception e)
             {
@@ -226,5 +232,9 @@
         {
             return p._wynagrodzenie.PobierzWartoscWynagrodzenia();
         }
+
+        public delegate void ZmianaWynagrodzenia(double staraWartosc, double nowaWartosc);
+
+        public ZmianaWynagrodzenia OnZmianaWynagrodzenia;
     }
 }

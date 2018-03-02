@@ -74,6 +74,14 @@
             Console.WriteLine(menadzer != pracownik);
 
             Console.WriteLine((double)menadzer);
+
+            menadzer.OnZmianaWynagrodzenia += (staraWartosc, nowaWartosc) =>
+                                               {
+                                                   Console.WriteLine("Zmiana wynagrodzenia. Stara wartosc: {0}. Nowa wartosc: {1}", staraWartosc,
+                                                       nowaWartosc);
+                                               };
+
+            menadzer.ZmienWynagrodzenie(6000, 3000, 0);
         }
 
         private static void ZmienNazweStanowiska(Pracownik pracownik, string nazwa)
