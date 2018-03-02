@@ -27,13 +27,19 @@
             ZmienNazweStanowiska(menadzer, "test2");
 
             var pracownicy = new Pracownicy();
-            pracownicy.ListaPracownikow.Add(menadzer);
-            pracownicy.ListaPracownikow.Add(pracownik);
+            pracownicy.DodajPracownika(menadzer);
+            pracownicy.DodajPracownika(pracownik);
+            pracownicy.DodajPracownika(Pracownik.UtworzPracownika("test","test"));
 
             var janKowalski = pracownicy["Jan", "Kowalski"];
             Console.WriteLine(janKowalski.NazwaStanowiska);
             janKowalski.WyplacWynagrodzenie();
             Console.WriteLine(janKowalski[0].Tytul);
+
+            pracownicy.UsunPracownika(janKowalski);
+            var usunietyPracownik = pracownicy["Jan", "Kowalski"];
+            Console.WriteLine(usunietyPracownik == null);
+            Console.WriteLine(pracownicy.PobierzPracownika(p => p.Imie == "test").Nazwisko);
         }
 
         private static void ZmienNazweStanowiska(Pracownik pracownik, string nazwa)

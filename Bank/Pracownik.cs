@@ -120,5 +120,12 @@
             get { return this._operacje[index]; }
             set { this._operacje[index] = value; }
         }
+
+        public static Pracownik UtworzPracownika(string imie, string nazwisko)
+        {
+            var podstawoweWynagrodzenie = new Wynagrodzenie(1500, 0, 1.0);
+
+            return new Pracownik(podstawoweWynagrodzenie, 0, imie, nazwisko, "pracownik", TypUmowy.OPace, 0, new DateTime());
+        }
     }
 }
