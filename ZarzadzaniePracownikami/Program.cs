@@ -20,7 +20,7 @@
             Console.WriteLine(klient.DataUtworzeniaKlienta);
             InformacjeOOsobie(klient);
 
-            var menadzer = new Menadzer(new Wynagrodzenie(10000, 100, 50), 23, "Albert", "Einstein", TypUmowy.OPace, 1231231234123, "Test", DateTime.Parse("01-04-2000"));
+            var menadzer = new Menadzer(new Wynagrodzenie(10000, 100, 0.5), 23, "Albert", "Einstein", TypUmowy.OPace, 1231231234123, "Test", DateTime.Parse("01-04-2000"));
             InformacjeOOsobie(menadzer);
 
             ZmienNazweStanowiska(pracownik, "test");
@@ -50,6 +50,24 @@
             foreach (var p in pracownicy)
             {
                 Console.WriteLine(p.ToString());
+            }
+
+            try
+            {
+                new Pracownik(wynagrodzenie, 10, "Umowa", "O prace", "na czas nieokreslony", TypUmowy.OPace, true, 123454645, DateTime.Now);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e);
+            }
+
+            try
+            {
+                new Pracownik(new Wynagrodzenie(100000, 10000, 1), 10, "Zbyt", "wysokie", "wynagrodzenie", TypUmowy.OPace, false, 123454645, DateTime.Now);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e);
             }
         }
 

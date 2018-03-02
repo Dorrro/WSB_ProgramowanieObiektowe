@@ -8,6 +8,14 @@
     {
         public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, bool umowaNaCzasNieokreslony, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
         {
+            if (umowaNaCzasNieokreslony && umowa == TypUmowy.OPace)
+            {
+                throw new ArgumentException("Pierwsza umowa nie może być na czas nieokreślony");
+            }
+            if (wynagrodzenie.PobierzWartoscWynagrodzenia() > 10000)
+            {
+                throw new ArgumentException("Wynagrodzenie nie może być wyższe niż 10000");
+            }
             this._wynagrodzenie = wynagrodzenie;
             this._czasUmowyWMiesiacach = czasUmowyWMiesiacach;
             this.NazwaStanowiska = nazwaStanowiska;
@@ -18,6 +26,10 @@
 
         public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
         {
+            if (wynagrodzenie.PobierzWartoscWynagrodzenia() > 10000)
+            {
+                throw new ArgumentException("Wynagrodzenie nie może być wyższe niż 10000");
+            }
             this._wynagrodzenie = wynagrodzenie;
             this._czasUmowyWMiesiacach = czasUmowyWMiesiacach;
             this.NazwaStanowiska = nazwaStanowiska;
@@ -128,13 +140,27 @@
 
         public void ZmienWynagrodzenie(double placaZasadnicza, double dodatekStazowy, float kosztUzyskaniaPrzychodu)
         {
-            this._wynagrodzenie = new Wynagrodzenie(placaZasadnicza, dodatekStazowy, kosztUzyskaniaPrzychodu);
+            try
+            {
+                this._wynagrodzenie = new Wynagrodzenie(placaZasadnicza, dodatekStazowy, kosztUzyskaniaPrzychodu);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Wystąpił błąd podczas zmiany wynagrodzenia\n{0}", e);
+            }
         }
 
         public void WyplacWynagrodzenie()
         {
-            var operacja = new Operacja(DateTime.Now, this._wynagrodzenie.PobierzWartoscWynagrodzenia(), this.NumerKonta, true, "Wyplata wynagrodzenia");
-            this._operacje.Add(operacja);
+            try
+            {
+                var operacja = new Operacja(DateTime.Now, this._wynagrodzenie.PobierzWartoscWynagrodzenia(), this.NumerKonta, true, "Wyplata wynagrodzenia");
+                this._operacje.Add(operacja);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Wystąpił błąd dodawania operacji do listy\n{0}", e);
+            }
         }
 
         protected Wynagrodzenie _wynagrodzenie;
@@ -159,8 +185,19 @@
 
         public Operacja this[int index]
         {
-            get { return this._operacje[index]; }
-            set { this._operacje[index] = value; }
+            get
+            {
+                Operacja operacja = null;
+                try
+                {
+                    operacja = this._operacje[index];
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Wystąpił błąd pobierania operacji przez index\n{0}", e);
+                }
+                return operacja;
+            }
         }
 
         public static Pracownik UtworzPracownika(string imie, string nazwisko)

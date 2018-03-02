@@ -1,5 +1,7 @@
 ﻿namespace Finanse.Pracownicy
 {
+    using System;
+
     public struct Wynagrodzenie
     {
         private double _placaZasadnicza;
@@ -8,6 +10,10 @@
 
         public Wynagrodzenie(double placaZasadnicza, double dodatekStazowy, double kosztUzyskaniaPrzychodu)
         {
+            if (kosztUzyskaniaPrzychodu > 1 || kosztUzyskaniaPrzychodu < 0)
+            {
+                throw new ArgumentException("Koszt uzyskania przychodu powinien mieć wartość pomiędzy 0, a 1");
+            }
             this._placaZasadnicza = placaZasadnicza;
             this._dodatekStazowy = dodatekStazowy;
             this._kosztUzyskaniaPrzychodu = kosztUzyskaniaPrzychodu;

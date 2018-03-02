@@ -24,7 +24,14 @@
 
         public void UsunPracownika(Pracownik pracownik)
         {
-            this.ListaPracownikow.Remove(pracownik);
+            try
+            {
+                this.ListaPracownikow.Remove(pracownik);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Wystąpił błąd usuwania pracownika\n{0}", e);
+            }
         }
 
         public Pracownik PobierzPracownika(Func<Pracownik, bool> filter)
