@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Osoba : IOsoba
+    public abstract class Osoba : IOsoba
     {
         public string Imie { get; protected set; }
         public string Nazwisko { get; protected set; }
@@ -28,5 +28,7 @@
         {
             return string.Format("=========== Informacje o pracowniku ============\nImie i nazwisko: {0} {1}\nData urodzenia: {2}", this.Imie, this.Nazwisko, this.DataUrodzenia);
         }
+
+        public abstract void Zainteresowania(string zainteresowanie);
     }
 }

@@ -10,5 +10,9 @@
         }
 
         public DateTime DataUtworzeniaKlienta { get; private set; }
+        public override void Zainteresowania(string zainteresowanie)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

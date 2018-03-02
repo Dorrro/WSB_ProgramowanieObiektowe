@@ -61,6 +61,12 @@
 
         ~Pracownik() {
         }
+
+        public override void Zainteresowania(string zainteresowanie)
+        {
+            throw new NotImplementedException();
+        }
+
         public object Clone()
         {
             return this.MemberwiseClone();

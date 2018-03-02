@@ -13,8 +13,8 @@
             Console.WriteLine(pracownik.Pensja);
             InformacjeOOsobie(pracownik);
 
-            var osoba = new Osoba("Jan", "Kowalski", DateTime.Parse("01-02-2000"));
-            InformacjeOOsobie(osoba);
+//            var osoba = new Osoba("Jan", "Kowalski", DateTime.Parse("01-02-2000"));
+//            InformacjeOOsobie(osoba);
 
             var klient = new Klient("Test", "Test", DateTime.Parse("01-03-2000"));
             Console.WriteLine(klient.DataUtworzeniaKlienta);
