@@ -8,7 +8,63 @@
     [XmlInclude(typeof(Menadzer))]
     public class Pracownik : Osoba, IEquatable<Pracownik>, IComparable<Pracownik>, ICloneable, IDisposable
     {
-        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, bool umowaNaCzasNieokreslony, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
+        [XmlIgnore] public ZmianaWynagrodzenia OnZmianaWynagrodzenia;
+
+        protected static double _dodatekWakacyjny = 1000;
+
+        protected List<Operacja> _operacje = new List<Operacja>();
+
+        protected Wynagrodzenie _wynagrodzenie;
+
+        protected int _czasUmowyWMiesiacach;
+
+        public delegate void ZmianaWynagrodzenia(double staraWartosc, double nowaWartosc);
+
+        public double Pensja
+        {
+            get
+            {
+                Console.WriteLine("Wymagana autoryzacja");
+                Console.Write("Login: ");
+                var login = Console.ReadLine();
+                Console.Write("Haslo: ");
+                var haslo = Console.ReadLine();
+                if (login == "admin" && haslo == "admin")
+                {
+                    return this._wynagrodzenie.PobierzWartoscWynagrodzenia();
+                }
+                Console.WriteLine("Blad autoryzacji");
+                return -1;
+            }
+        }
+
+        public string NazwaStanowiska { get; set; }
+
+        public TypUmowy Umowa { get; set; }
+
+        public bool UmowaNaCzasNieokreslony { get; set; }
+
+        public ulong NumerKonta { get; set; }
+
+        public Operacja this[int index]
+        {
+            get
+            {
+                Operacja operacja = null;
+                try
+                {
+                    operacja = this._operacje[index];
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Wystąpił błąd pobierania operacji przez index\n{0}", e);
+                }
+                return operacja;
+            }
+        }
+
+        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa,
+            bool umowaNaCzasNieokreslony, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
         {
             if (umowaNaCzasNieokreslony && umowa == TypUmowy.OPace)
             {
@@ -26,7 +82,8 @@
             this.NumerKonta = numerKonta;
         }
 
-        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
+        public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa,
+            ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
         {
             if (wynagrodzenie.PobierzWartoscWynagrodzenia() > 10000)
             {
@@ -39,7 +96,8 @@
             this.NumerKonta = numerKonta;
         }
 
-        public Pracownik(string imie, string nazwisko, string nazwaStanowiska, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
+        public Pracownik(string imie, string nazwisko, string nazwaStanowiska, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko,
+            dataUrodzenia)
         {
             this.NazwaStanowiska = nazwaStanowiska;
             this.NumerKonta = numerKonta;
@@ -49,6 +107,41 @@
 
         public Pracownik() : base("", "", DateTime.Now)
         { }
+
+        ~Pracownik()
+        { }
+
+        public static Pracownik UtworzPracownika(string imie, string nazwisko)
+        {
+            var podstawoweWynagrodzenie = new Wynagrodzenie(1500, 0, 1.0);
+
+            return new Pracownik(podstawoweWynagrodzenie, 0, imie, nazwisko, "pracownik", TypUmowy.OPace, 0, new DateTime());
+        }
+
+        public static bool operator ==(Pracownik p1, Pracownik p2)
+        {
+            return Equals(p2, p1) || !Equals(null, p1) && !Equals(null, p2) && p1.Equals(p2);
+        }
+
+        public static bool operator !=(Pracownik p1, Pracownik p2)
+        {
+            return Equals(null, p1) || Equals(null, p2) || !p1.Equals(p2);
+        }
+
+        public static explicit operator double(Pracownik p)
+        {
+            return p._wynagrodzenie.PobierzWartoscWynagrodzenia();
+        }
+
+        public override void Zainteresowania(string zainteresowanie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return this.PobierzDane();
+        }
 
         public bool Equals(Pracownik other)
         {
@@ -76,25 +169,13 @@
             return 1;
         }
 
-        ~Pracownik() {
-        }
-
-        public override void Zainteresowania(string zainteresowanie)
-        {
-            throw new NotImplementedException();
-        }
-
         public object Clone()
         {
             return this.MemberwiseClone();
         }
 
-        public override string ToString()
-        {
-            return this.PobierzDane();
-        }
-
-        public void UstawInformacjeOPracowniku(string imie, string nazwisko, string nazwaStanowiska, Wynagrodzenie wynagrodzenie, TypUmowy umowa, int czasUmowyWMiesiacach, bool umowaNaCzasNieokreslony, ulong numerKonta)
+        public void UstawInformacjeOPracowniku(string imie, string nazwisko, string nazwaStanowiska, Wynagrodzenie wynagrodzenie, TypUmowy umowa,
+            int czasUmowyWMiesiacach, bool umowaNaCzasNieokreslony, ulong numerKonta)
         {
             this.Imie = imie;
             this.Nazwisko = nazwisko;
@@ -106,8 +187,6 @@
             this.NumerKonta = numerKonta;
         }
 
-        public string NazwaStanowiska { get; set; }
-
         public double DodatekWakacyjny()
         {
             return _dodatekWakacyjny;
@@ -116,31 +195,6 @@
         public void ZmienDodatekWakacyjny(double wartosc)
         {
             _dodatekWakacyjny = wartosc;
-        }
-
-        protected static double _dodatekWakacyjny = 1000;
-
-        protected List<Operacja> _operacje = new List<Operacja>();
-
-        public double Pensja
-        {
-            get
-            {
-                Console.WriteLine("Wymagana autoryzacja");
-                Console.Write("Login: ");
-                var login = Console.ReadLine();
-                Console.Write("Haslo: ");
-                var haslo = Console.ReadLine();
-                if (login == "admin" && haslo == "admin")
-                {
-                    return this._wynagrodzenie.PobierzWartoscWynagrodzenia();
-                }
-                else
-                {
-                    Console.WriteLine("Blad autoryzacji");
-                    return -1;
-                }
-            }
         }
 
         public void ZmienWynagrodzenie(double placaZasadnicza, double dodatekStazowy, float kosztUzyskaniaPrzychodu)
@@ -165,7 +219,8 @@
         {
             try
             {
-                var operacja = new Operacja(DateTime.Now, this._wynagrodzenie.PobierzWartoscWynagrodzenia(), this.NumerKonta, true, "Wyplata wynagrodzenia");
+                var operacja = new Operacja(DateTime.Now, this._wynagrodzenie.PobierzWartoscWynagrodzenia(), this.NumerKonta, true,
+                    "Wyplata wynagrodzenia");
                 this._operacje.Add(operacja);
             }
             catch (Exception e)
@@ -174,73 +229,19 @@
             }
         }
 
-        protected Wynagrodzenie _wynagrodzenie;
-
-        public TypUmowy Umowa { get; set; }
-
         public int CzasUmowyWMiesiacach()
         {
             return this._czasUmowyWMiesiacach;
         }
-
-        protected int _czasUmowyWMiesiacach;
-
-        public bool UmowaNaCzasNieokreslony { get; set; }
-
-        public ulong NumerKonta { get; set; }
 
         public void ZmienNazweStanowiska(string nazwa)
         {
             this.NazwaStanowiska = nazwa;
         }
 
-        public Operacja this[int index]
-        {
-            get
-            {
-                Operacja operacja = null;
-                try
-                {
-                    operacja = this._operacje[index];
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Wystąpił błąd pobierania operacji przez index\n{0}", e);
-                }
-                return operacja;
-            }
-        }
-
-        public static Pracownik UtworzPracownika(string imie, string nazwisko)
-        {
-            var podstawoweWynagrodzenie = new Wynagrodzenie(1500, 0, 1.0);
-
-            return new Pracownik(podstawoweWynagrodzenie, 0, imie, nazwisko, "pracownik", TypUmowy.OPace, 0, new DateTime());
-        }
-
         public void Dispose()
         {
             GC.SuppressFinalize(this);
         }
-
-        public static bool operator ==(Pracownik p1, Pracownik p2)
-        {
-            return Equals(p2, p1) || (!Equals(null, p1) && !Equals(null, p2) && p1.Equals(p2));
-        }
-
-        public static bool operator !=(Pracownik p1, Pracownik p2)
-        {
-            return Equals(null, p1) || Equals(null, p2) || !p1.Equals(p2);
-        }
-
-        public static explicit operator double(Pracownik p)
-        {
-            return p._wynagrodzenie.PobierzWartoscWynagrodzenia();
-        }
-
-        public delegate void ZmianaWynagrodzenia(double staraWartosc, double nowaWartosc);
-
-        [XmlIgnore]
-        public ZmianaWynagrodzenia OnZmianaWynagrodzenia;
     }
 }

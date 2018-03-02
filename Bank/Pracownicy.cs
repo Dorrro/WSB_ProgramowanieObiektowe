@@ -9,12 +9,16 @@
     {
         private List<Pracownik> ListaPracownikow = new List<Pracownik>();
 
+        public Pracownik Current { get; }
+
+        object IEnumerator.Current
+        {
+            get { return this.Current; }
+        }
+
         public Pracownik this[string imie, string nazwisko]
         {
-            get
-            {
-                return this.ListaPracownikow.FirstOrDefault(p => p.Imie == imie && p.Nazwisko == nazwisko);
-            }
+            get { return this.ListaPracownikow.FirstOrDefault(p => p.Imie == imie && p.Nazwisko == nazwisko); }
         }
 
         public void Add(Pracownik pracownik)
@@ -44,11 +48,6 @@
             return this.ListaPracownikow.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
         public void Dispose()
         {
             foreach (var pracownik in this.ListaPracownikow)
@@ -64,14 +63,11 @@
         }
 
         public void Reset()
-        { 
-        }
+        { }
 
-        public Pracownik Current { get; }
-
-        object IEnumerator.Current
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            get { return this.Current; }
+            return this.GetEnumerator();
         }
     }
 }
