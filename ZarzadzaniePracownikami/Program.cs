@@ -25,6 +25,15 @@
 
             ZmienNazweStanowiska(pracownik, "test");
             ZmienNazweStanowiska(menadzer, "test2");
+
+            var pracownicy = new Pracownicy();
+            pracownicy.ListaPracownikow.Add(menadzer);
+            pracownicy.ListaPracownikow.Add(pracownik);
+
+            var janKowalski = pracownicy["Jan", "Kowalski"];
+            Console.WriteLine(janKowalski.NazwaStanowiska);
+            janKowalski.WyplacWynagrodzenie();
+            Console.WriteLine(janKowalski[0].Tytul);
         }
 
         private static void ZmienNazweStanowiska(Pracownik pracownik, string nazwa)

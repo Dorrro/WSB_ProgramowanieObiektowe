@@ -1,6 +1,7 @@
 ﻿namespace Finanse.Pracownicy
 {
     using System;
+    using System.Collections.Generic;
     using BankFinanse.Pracownicy;
 
     public class Pracownik : Osoba
@@ -60,7 +61,7 @@
 
         protected static double _dodatekWakacyjny = 1000;
 
-        protected Operacja[] _operacje = new Operacja[400];
+        protected List<Operacja> _operacje = new List<Operacja>();
 
         public double Pensja
         {
@@ -91,7 +92,7 @@
         public void WyplacWynagrodzenie()
         {
             var operacja = new Operacja(DateTime.Now, this._wynagrodzenie.PobierzWartoscWynagrodzenia(), this.NumerKonta, true, "Wyplata wynagrodzenia");
-            this._operacje[0] = operacja;
+            this._operacje.Add(operacja);
         }
 
         protected Wynagrodzenie _wynagrodzenie;
@@ -112,6 +113,12 @@
         public void ZmienNazweStanowiska(string nazwa)
         {
             this.NazwaStanowiska = nazwa;
+        }
+
+        public Operacja this[int index]
+        {
+            get { return this._operacje[index]; }
+            set { this._operacje[index] = value; }
         }
     }
 }

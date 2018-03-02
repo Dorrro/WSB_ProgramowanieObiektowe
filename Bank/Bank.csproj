@@ -43,6 +43,7 @@
     <Compile Include="Menadzer.cs" />
     <Compile Include="Operacja.cs" />
     <Compile Include="Osoba.cs" />
+    <Compile Include="Pracownicy.cs" />
     <Compile Include="Pracownik.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypUmowy.cs" />
