@@ -69,6 +69,11 @@
             {
                 Console.WriteLine(e);
             }
+
+            Console.WriteLine(menadzer == pracownik);
+            Console.WriteLine(menadzer != pracownik);
+
+            Console.WriteLine((double)menadzer);
         }
 
         private static void ZmienNazweStanowiska(Pracownik pracownik, string nazwa)

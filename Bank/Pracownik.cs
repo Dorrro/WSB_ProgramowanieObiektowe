@@ -50,7 +50,7 @@
             if (other == null)
                 return false;
 
-            if (this.Imie == other.Imie && this.Nazwisko == other.Nazwisko && this.NumerKonta == other.NumerKonta)
+            if (this.Imie == other.Imie && this.Nazwisko == other.Nazwisko)
             {
                 return true;
             }
@@ -210,6 +210,21 @@
         public void Dispose()
         {
             GC.SuppressFinalize(this);
+        }
+
+        public static bool operator ==(Pracownik p1, Pracownik p2)
+        {
+            return Equals(p2, p1) || (!Equals(null, p1) && !Equals(null, p2) && p1.Equals(p2));
+        }
+
+        public static bool operator !=(Pracownik p1, Pracownik p2)
+        {
+            return Equals(null, p1) || Equals(null, p2) || !p1.Equals(p2);
+        }
+
+        public static explicit operator double(Pracownik p)
+        {
+            return p._wynagrodzenie.PobierzWartoscWynagrodzenia();
         }
     }
 }
