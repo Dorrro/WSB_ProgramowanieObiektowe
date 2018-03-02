@@ -17,7 +17,7 @@
             }
         }
 
-        public void DodajPracownika(Pracownik pracownik)
+        public void Add(Pracownik pracownik)
         {
             this.ListaPracownikow.Add(pracownik);
         }

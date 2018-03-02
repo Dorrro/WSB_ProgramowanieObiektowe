@@ -1,6 +1,8 @@
 ﻿namespace ZarzadzaniePracownikami
 {
     using System;
+    using System.IO;
+    using System.Xml.Serialization;
     using BankFinanse.Pracownicy;
     using Finanse.Pracownicy;
 
@@ -27,9 +29,9 @@
             ZmienNazweStanowiska(menadzer, "test2");
 
             var pracownicy = new Pracownicy();
-            pracownicy.DodajPracownika(menadzer);
-            pracownicy.DodajPracownika(pracownik);
-            pracownicy.DodajPracownika(Pracownik.UtworzPracownika("test","test"));
+            pracownicy.Add(menadzer);
+            pracownicy.Add(pracownik);
+            pracownicy.Add(Pracownik.UtworzPracownika("test","test"));
 
             var janKowalski = pracownicy["Jan", "Kowalski"];
             Console.WriteLine(janKowalski.NazwaStanowiska);
@@ -82,6 +84,24 @@
                                                };
 
             menadzer.ZmienWynagrodzenie(6000, 3000, 0);
+
+
+            var xmlSerializer = new XmlSerializer(typeof(Pracownicy));
+            using (var stream = new StreamWriter(new FileStream("pracownicy.xml", FileMode.OpenOrCreate)))
+            {
+                xmlSerializer.Serialize(stream, pracownicy);
+            }
+
+            using (var stream = new StreamReader(new FileStream("pracownicy.xml", FileMode.OpenOrCreate)))
+            {
+                var deserialize = xmlSerializer.Deserialize(stream) as Pracownicy;
+                if (deserialize == null) return;
+
+                foreach (var p in deserialize)
+                {
+                    Console.WriteLine(p.ToString());
+                }
+            }
         }
 
         private static void ZmienNazweStanowiska(Pracownik pracownik, string nazwa)

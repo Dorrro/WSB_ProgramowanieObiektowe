@@ -20,6 +20,9 @@
             this.ZarzadzanyZespol = zarzadzanyZespol;
         }
 
-        public string ZarzadzanyZespol { get; private set; }
+        public Menadzer()
+        { }
+
+        public string ZarzadzanyZespol { get; set; }
     }
 }

@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Xml.Serialization;
     using BankFinanse.Pracownicy;
 
+    [XmlInclude(typeof(Menadzer))]
     public class Pracownik : Osoba, IEquatable<Pracownik>, IComparable<Pracownik>, ICloneable, IDisposable
     {
         public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, bool umowaNaCzasNieokreslony, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
@@ -44,6 +46,9 @@
             this.Umowa = TypUmowy.OPace;
             this.UmowaNaCzasNieokreslony = true;
         }
+
+        public Pracownik() : base("", "", DateTime.Now)
+        { }
 
         public bool Equals(Pracownik other)
         {
@@ -101,7 +106,7 @@
             this.NumerKonta = numerKonta;
         }
 
-        public string NazwaStanowiska { get; private set; }
+        public string NazwaStanowiska { get; set; }
 
         public double DodatekWakacyjny()
         {
@@ -235,6 +240,7 @@
 
         public delegate void ZmianaWynagrodzenia(double staraWartosc, double nowaWartosc);
 
+        [XmlIgnore]
         public ZmianaWynagrodzenia OnZmianaWynagrodzenia;
     }
 }

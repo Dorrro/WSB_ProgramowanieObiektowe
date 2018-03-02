@@ -22,6 +22,9 @@
             this.Tytul = tytul;
         }
 
+        public Operacja()
+        { }
+
         ~Operacja() { }
 
         public void UstawDane(DateTime data, double kwota, ulong numerKonta, bool realizacja, string tytul)

@@ -4,9 +4,9 @@
 
     public abstract class Osoba : IOsoba
     {
-        public string Imie { get; protected set; }
-        public string Nazwisko { get; protected set; }
-        public DateTime DataUrodzenia { get; private set; }
+        public string Imie { get; set; }
+        public string Nazwisko { get; set; }
+        public DateTime DataUrodzenia { get; set; }
 
         public Osoba(string imie, string nazwisko, DateTime dataUrodzenia)
         {
