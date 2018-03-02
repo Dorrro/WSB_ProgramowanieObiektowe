@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Osoba
+    public class Osoba : IOsoba
     {
         public string Imie { get; protected set; }
         public string Nazwisko { get; protected set; }

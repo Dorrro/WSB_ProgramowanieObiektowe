@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using BankFinanse.Pracownicy;
 
-    public class Pracownik : Osoba
+    public class Pracownik : Osoba, IEquatable<Pracownik>, IComparable<Pracownik>, ICloneable, IDisposable
     {
         public Pracownik(Wynagrodzenie wynagrodzenie, int czasUmowyWMiesiacach, string imie, string nazwisko, string nazwaStanowiska, TypUmowy umowa, bool umowaNaCzasNieokreslony, ulong numerKonta, DateTime dataUrodzenia) : base(imie, nazwisko, dataUrodzenia)
         {
@@ -33,7 +33,43 @@
             this.UmowaNaCzasNieokreslony = true;
         }
 
-        ~Pracownik() { }
+        public bool Equals(Pracownik other)
+        {
+            if (other == null)
+                return false;
+
+            if (this.Imie == other.Imie && this.Nazwisko == other.Nazwisko && this.NumerKonta == other.NumerKonta)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public int CompareTo(Pracownik other)
+        {
+            if (other == null)
+                return -1;
+
+            if (this.Equals(other))
+            {
+                return 0;
+            }
+
+            return 1;
+        }
+
+        ~Pracownik() {
+        }
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return this.PobierzDane();
+        }
 
         public void UstawInformacjeOPracowniku(string imie, string nazwisko, string nazwaStanowiska, Wynagrodzenie wynagrodzenie, TypUmowy umowa, int czasUmowyWMiesiacach, bool umowaNaCzasNieokreslony, ulong numerKonta)
         {
@@ -126,6 +162,11 @@
             var podstawoweWynagrodzenie = new Wynagrodzenie(1500, 0, 1.0);
 
             return new Pracownik(podstawoweWynagrodzenie, 0, imie, nazwisko, "pracownik", TypUmowy.OPace, 0, new DateTime());
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

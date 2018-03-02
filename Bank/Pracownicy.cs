@@ -1,10 +1,11 @@
 ﻿namespace Finanse.Pracownicy
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Pracownicy
+    public class Pracownicy : IEnumerable<Pracownik>, IEnumerator<Pracownik>
     {
         private List<Pracownik> ListaPracownikow = new List<Pracownik>();
 
@@ -29,6 +30,41 @@
         public Pracownik PobierzPracownika(Func<Pracownik, bool> filter)
         {
             return this.ListaPracownikow.SingleOrDefault(filter);
+        }
+
+        public IEnumerator<Pracownik> GetEnumerator()
+        {
+            return this.ListaPracownikow.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public void Dispose()
+        {
+            foreach (var pracownik in this.ListaPracownikow)
+            {
+                pracownik.Dispose();
+            }
+        }
+
+        public bool MoveNext()
+        {
+            return this.ListaPracownikow.GetEnumerator()
+                .MoveNext();
+        }
+
+        public void Reset()
+        { 
+        }
+
+        public Pracownik Current { get; }
+
+        object IEnumerator.Current
+        {
+            get { return this.Current; }
         }
     }
 }

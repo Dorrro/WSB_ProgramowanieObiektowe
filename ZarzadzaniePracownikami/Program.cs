@@ -40,6 +40,17 @@
             var usunietyPracownik = pracownicy["Jan", "Kowalski"];
             Console.WriteLine(usunietyPracownik == null);
             Console.WriteLine(pracownicy.PobierzPracownika(p => p.Imie == "test").Nazwisko);
+
+            Console.WriteLine(menadzer.Equals(pracownik));
+            Console.WriteLine(pracownik.Equals(usunietyPracownik));
+
+            Console.WriteLine(menadzer.CompareTo(pracownik));
+            Console.WriteLine(pracownik.CompareTo(usunietyPracownik));
+
+            foreach (var p in pracownicy)
+            {
+                Console.WriteLine(p.ToString());
+            }
         }
 
         private static void ZmienNazweStanowiska(Pracownik pracownik, string nazwa)
